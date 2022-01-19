@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import top.lyfzn.media.quick.annotation.ApiLog;
 import top.lyfzn.media.quick.factory.MediaApiFactory;
 import top.lyfzn.media.quick.bean.MediaParseResult;
+import top.lyfzn.media.quick.bean.media.ObjectFlag;
 
 import javax.annotation.Resource;
 
@@ -19,7 +20,6 @@ import javax.annotation.Resource;
 public class MediaController {
     @Resource
     private MediaApiFactory mediaApiFactory;
-
     /**
      * 解析短视频链接
      * @param flag 短视频链接（可携带描述信息）
@@ -27,7 +27,11 @@ public class MediaController {
      */
     @PostMapping("/parse")
     @ApiLog
-    public MediaParseResult parse(@RequestBody @NonNull String flag) {
-        return mediaApiFactory.getMediaApi(flag).parse(flag);
+    public MediaParseResult parse(@RequestBody @NonNull ObjectFlag flag) {
+        
+        ObjectFlag FlagValue = flag;
+        String fullUrl=FlagValue.toString();
+    
+        return mediaApiFactory.getMediaApi(fullUrl).parse(fullUrl);
     }
 }
